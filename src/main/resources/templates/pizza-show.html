@@ -26,12 +26,20 @@
 			<ul >
 				<li
 					th:each="offer : ${pizza.specialOffers}"
-					
+					th:object="${offer}"
 				>
 					<span>[[${offer.getTitle()}]] da: [[${offer.getHtmlStartDate()}]] a: [[${offer.getHtmlEndDate()}]]</span>
 					<br/>
 					<br/>
-					<span><a>Modifica</a></span>
+					<span><a th:href="@{/offers/edit/{id}(id=*{id})}">Modifica</a></span>
+					
+					<form 
+						th:action="@{/offers/delete/{id}(id=*{id})}"
+						method="POST"
+						style="display: inline;"
+					>
+						<input type="submit" value="ELIMINA" >	
+					</form>
 					<br/>
 					<br/>
 				</li>

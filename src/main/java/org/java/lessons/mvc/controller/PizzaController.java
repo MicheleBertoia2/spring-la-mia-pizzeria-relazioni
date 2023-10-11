@@ -140,4 +140,43 @@ public class PizzaController {
 		sos.save(specialOffer);
 		return "redirect:/pizze/" + id;
 	}
+	
+	@PostMapping("/offers/delete/{offer_id}")
+	public String deleteOffer(@PathVariable("offer_id") int id)
+	{
+		SpecialOffer specialOffer = sos.findById(id);
+		Pizza pizza = specialOffer.getPizza();
+		sos.delete(specialOffer);
+		return "redirect:/pizze/" + pizza.getId();
+	}
+	
+	@GetMapping("/offers/edit/{offer_id}")
+	public String editOffer(
+			@PathVariable("offer_id") int id,
+			Model model
+			)
+	{
+		SpecialOffer spOf = sos.findById(id);
+		List<Pizza> pizze = pizzaService.findAll();
+		
+		model.addAttribute("specialOffer", spOf);
+		model.addAttribute("pizze", pizze);
+		
+		return "offer-edit";
+	}
+	
+	@PostMapping("/offers/edit/{offer_id}")
+	public String updateOffer(
+			@Valid @ModelAttribute SpecialOffer specialOffer,
+			BindingResult br,
+			Model model
+			)
+	{
+		sos.save(specialOffer);
+		
+		Pizza pizza = specialOffer.getPizza();
+		
+		return "redirect:/pizze/" + pizza.getId();
+	}
+	
 }
