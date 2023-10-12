@@ -2,8 +2,10 @@ package org.java.lessons.mvc.controller;
 
 import java.util.List;
 
+import org.java.lessons.db.pojo.Ingredient;
 import org.java.lessons.db.pojo.Pizza;
 import org.java.lessons.db.pojo.SpecialOffer;
+import org.java.lessons.db.serv.IngredientService;
 import org.java.lessons.db.serv.PizzaService;
 import org.java.lessons.db.serv.SpecialOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +30,9 @@ public class PizzaController {
 	
 	@Autowired
 	private SpecialOfferService sos;
+	
+	@Autowired
+	private IngredientService ise;
 
 	@GetMapping
 	public String index(Model model,
@@ -55,7 +60,11 @@ public class PizzaController {
 	@GetMapping("/create")
 	public String pizzaCreate(Model model)
 	{
+		List<Ingredient> ingredients = ise.findAll();		
+		
+		model.addAttribute("ingredients", ingredients);
 		model.addAttribute("pizza", new Pizza());
+		
 		return "pizza-create";
 	}
 	
@@ -82,7 +91,11 @@ public class PizzaController {
 	public String editForm(@PathVariable int id, Model model)
 	{
 		Pizza pizza = pizzaService.findById(id);
+		List<Ingredient> ingredients = ise.findAll();		
+		
+		model.addAttribute("ingredients", ingredients);
 		model.addAttribute("pizza", pizza);
+		
 		return "pizza-update";
 	}
 	

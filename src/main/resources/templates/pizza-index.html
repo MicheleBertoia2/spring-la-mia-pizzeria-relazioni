@@ -7,10 +7,12 @@
 <body>
 	<div th:if="${#lists.size(pizze) <= 0}">
 		<h1>Non sono Presenti pizze</h1>
+		<h2><a th:href="@{/ingredients}">Lista ingredienti</a></h2>
 	</div>
 	
 	<div th:if="${#lists.size(pizze) > 0}">
 		<h1>Lista pizze</h1>
+		<h2><a th:href="@{/ingredients}">Lista ingredienti</a></h2>
 		<form>
 			<label for="name">Cerca una pizza</label>
 			<input type="text" name="name" th:value="${name}">
@@ -25,7 +27,7 @@
 				th:object="${pizza}"
 			>
 				<h3>[[*{name}]]</h3>
-				<img th:src="@{${pizza.image}}">
+				<img style="width: 500px;" th:src="@{${pizza.image}}">
 				<h4> <span th:text="${#numbers.formatDecimal(pizza.price, 0, 'POINT', 2, 'COMMA')}"></span> euro</h4>
 				<h5>[[*{ingredients}]]</h5>
 				<a th:href="@{/pizze/{id}(id=*{id})}"> DETTAGLIO </a>

@@ -6,6 +6,7 @@
 </head>
 <body th:object="${pizza}">
 	<h1>Dettaglio pizza [[*{name}]]</h1>
+	<h2><a th:href="@{/}">HOME</a></h2>
 	<div>
 			<a th:href="@{/edit/{id}(id=*{id})}"> MODIFICA </a>
 				<form
@@ -44,6 +45,16 @@
 					<br/>
 				</li>
 			</ul>	
+			
+			<h3>Ingredienti</h3>
+			<ul>
+				<li 
+					th:each="ing : ${pizza.ingredienti}"
+					th:object="${ing}"
+				>
+					[[*{name}]]
+				</li>
+			</ul>
 			
 		
 

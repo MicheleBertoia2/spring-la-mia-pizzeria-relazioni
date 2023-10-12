@@ -45,7 +45,7 @@
 		</div>
 		
 		<div>
-			<label for="ingredients">Ingredienti</label>
+			<label for="ingredients">Descrizione</label>
 			<input type="text" name="ingredients" th:field="*{ingredients}">
 			<div  th:if="${#fields.hasErrors('ingredients')}">
 				<ul>
@@ -54,7 +54,17 @@
 			</div>			
 		</div>
 			
-		
+		<div th:each="ing : ${ingredients}" th:object="${ing}" >
+			<input
+				type="checkbox"			
+				th:id="${'ingredient-' + ing.id}"
+				th:value="*{id}"
+				th:field="${pizza.ingredienti}"
+			>
+			<label th:for="${'ingredient-' + ing.id}">
+				[[*{name}]]
+			</label>
+		</div>
 		
 		<input type="submit" value="Aggiungi" >
 	</form>

@@ -2,8 +2,10 @@ package org.java.lessons;
 
 import java.time.LocalDate;
 
+import org.java.lessons.db.pojo.Ingredient;
 import org.java.lessons.db.pojo.Pizza;
 import org.java.lessons.db.pojo.SpecialOffer;
+import org.java.lessons.db.serv.IngredientService;
 import org.java.lessons.db.serv.PizzaService;
 import org.java.lessons.db.serv.SpecialOfferService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,16 +22,41 @@ public class LaMiaPizzeria1Application implements CommandLineRunner{
 	@Autowired
 	private SpecialOfferService sor;
 	
+	@Autowired
+	private IngredientService ise;
+	
 	public static void main(String[] args) {
 		SpringApplication.run(LaMiaPizzeria1Application.class, args);
 	}
 
 	@Override
-	public void run(String... args) throws Exception {		
+	public void run(String... args) throws Exception {	
 		
-		Pizza pizza1 = new Pizza("margherita", 6.50d,"https://it.ooni.com/cdn/shop/articles/Margherita-9920.jpg?crop=center&height=800&v=1644590028&width=800", "pomodoro, mozzarella");
-		Pizza pizza2 = new Pizza("capricciosa", 8.00d,"https://www.pizzanapoletanadoc.it/wp-content/uploads/2019/04/capricciosa-pizza-napoletana-doc.jpg" , "pomodoro, mozzarella, prosciutto, carciofi, funghi");
-		Pizza pizza3 = new Pizza("diavola", 7.50d, "https://www.negroni.com/sites/negroni.com/files/styles/scale__1440_x_1440_/public/pizza_rustica.jpg?itok=Lbp_jtZW", "pomodoro, mozzarella, salamino piccante");
+		Ingredient i1 = new Ingredient("pomodoro");
+		Ingredient i2 = new Ingredient("mozzarella");
+		Ingredient i3 = new Ingredient("salamino");
+		Ingredient i4 = new Ingredient("prosciutto");
+		Ingredient i5 = new Ingredient("funghi");
+		Ingredient i6 = new Ingredient("carciofi");
+		
+		ise.save(i1);
+		ise.save(i2);
+		ise.save(i3);
+		ise.save(i4);
+		ise.save(i5);
+		ise.save(i6);
+		
+		Pizza pizza1 = new Pizza("margherita", 6.50d,
+								"https://it.ooni.com/cdn/shop/articles/Margherita-9920.jpg?crop=center&height=800&v=1644590028&width=800", 
+								"descrizione", i1, i2);
+		
+		Pizza pizza2 = new Pizza("capricciosa", 8.00d,
+								"https://www.pizzanapoletanadoc.it/wp-content/uploads/2019/04/capricciosa-pizza-napoletana-doc.jpg" , 
+								"descrizione", i1, i2, i4, i5, i6);
+		
+		Pizza pizza3 = new Pizza("diavola", 7.50d, 
+								"https://www.negroni.com/sites/negroni.com/files/styles/scale__1440_x_1440_/public/pizza_rustica.jpg?itok=Lbp_jtZW", 
+								"descrizione", i1, i2, i3);
 		
 		pServ.save(pizza1);
 		pServ.save(pizza2);
